@@ -54,7 +54,7 @@ void drive(int power){
 // • encoder count must be positive
 // • drive power of 80 is very reliable
 /////////////////////////////////////////////////////////////////////////////////////////
-void encoderDrive(int power, int encoderCount, int slowDown){
+void encoderDrive(int power, int encoderCount){
 
 	while(abs(nMotorEncoder[leftDrive2]) < encoderCount && abs(nMotorEncoder[rightDrive2]) < encoderCount - 300){
 		drive(power);	//Drive robot at power
@@ -68,7 +68,7 @@ void encoderDrive(int power, int encoderCount, int slowDown){
 
 	//Slow down near destination
 	while(abs(nMotorEncoder[leftDrive2]) < encoderCount && abs(nMotorEncoder[rightDrive2]) < encoderCount){
-		drive(slowDown);	//Drive robot at power
+		drive(power/2.5);	//Drive robot at power
 
 		if(nMotorEncoder[leftDrive2] >= encoderCount)
 			motor[leftDrive1]=motor[leftDrive2]=motor[leftDrive3] = 0;
@@ -87,7 +87,7 @@ void encoderDrive(int power, int encoderCount, int slowDown){
 // • + or - position determines lift up or down
 // • encoder count must be positive
 /////////////////////////////////////////////////////////////////////////////////////////
-void encoderDriveWithLift(int power, int encoderCount, int position, int slowDown){
+void encoderDriveWithLift(int power, int encoderCount, int position){
 
 	while(abs(nMotorEncoder[leftDrive2]) < encoderCount && abs(nMotorEncoder[rightDrive2]) < encoderCount - 300){
 		drive(power);	//Drive robot at power
@@ -106,7 +106,7 @@ void encoderDriveWithLift(int power, int encoderCount, int position, int slowDow
 
 	//Slow down near destination
 	while(abs(nMotorEncoder[leftDrive2]) < encoderCount && abs(nMotorEncoder[rightDrive2]) < encoderCount){
-		drive(slowDown);	//Drive robot at power
+		drive(power);	//Drive robot at power
 
 		if(nMotorEncoder[leftDrive2] >= encoderCount)
 			motor[leftDrive1]=motor[leftDrive2] = motor[leftDrive3] = 0;
