@@ -21,15 +21,11 @@ void blueMiddle () {
 
 	//Spin to big ball
 	spin(-40, 120);
-	wait1Msec(500);
+	wait1Msec(300);
 	resetEncoders();
 
-	////Lift lift
-	liftLift(1029);
-	wait1Msec(500);
-
 	//Drive into big ball
-	encoderDrive(127, 950);
+	encoderDriveWithLift(100, 950, 1029);
 	wait1Msec(500);
 	resetEncoders();
 
@@ -40,7 +36,6 @@ void blueMiddle () {
 
 	////Lower lift
 	lowerLift(400);
-	wait1Msec(500);
 
 	//Go forward when button is pushed
 	while(true)
@@ -57,7 +52,6 @@ void blueMiddle () {
 
 	//Lift lift
 	liftLift(1400);
-	wait1Msec(500);
 	motor[leftLift]=motor[rightLift]=15;
 
 	//Spin to tube
@@ -75,7 +69,7 @@ void blueMiddle () {
 	writeDebugStreamLine("Outtaking");
 
 	//Drive back for large ball
-	encoderDrive(-100, 110);
+	encoderDrive(-100, 140);
 	wait1Msec(500);
 	resetEncoders();
 
@@ -85,7 +79,7 @@ void blueMiddle () {
 	motor[leftIntake] = motor[rightIntake] = 0;
 
 	//Drive back a bit
-	encoderDrive(-100, 200);
+	encoderDrive(-100, 600);
 	wait1Msec(500);
 	resetEncoders();
 }
