@@ -52,10 +52,11 @@ void drive(int power){
 //Info:
 // • + or - power determines front or back
 // • encoder count must be positive
+// • drive power of 80 is very reliable
 /////////////////////////////////////////////////////////////////////////////////////////
-void encoderDrive(int power, int encoderCount){
+void encoderDrive(int power, int encoderCount, int slowDown){
 
-	while(abs(nMotorEncoder[leftDrive2]) < encoderCount && abs(nMotorEncoder[rightDrive2]) < encoderCount - 100){
+	while(abs(nMotorEncoder[leftDrive2]) < encoderCount && abs(nMotorEncoder[rightDrive2]) < encoderCount - 300){
 		drive(power);	//Drive robot at power
 
 		if(nMotorEncoder[leftDrive2] >= encoderCount)
@@ -63,18 +64,18 @@ void encoderDrive(int power, int encoderCount){
 
 		if(nMotorEncoder[rightDrive2] >= encoderCount)
 			motor[rightDrive1] = motor[rightDrive2] = 0;
-		}
+	}
 
 	//Slow down near destination
 	while(abs(nMotorEncoder[leftDrive2]) < encoderCount && abs(nMotorEncoder[rightDrive2]) < encoderCount){
-		drive(50);	//Drive robot at power
+		drive(slowDown);	//Drive robot at power
 
 		if(nMotorEncoder[leftDrive2] >= encoderCount)
 			motor[leftDrive1]=motor[leftDrive2]=motor[leftDrive3] = 0;
 
 		if(nMotorEncoder[rightDrive2] >= encoderCount)
 			motor[rightDrive1] = motor[rightDrive2] = 0;
-		}
+	}
 	drive(0);	//Turn off after it has reached destination
 }
 
@@ -86,9 +87,9 @@ void encoderDrive(int power, int encoderCount){
 // • + or - position determines lift up or down
 // • encoder count must be positive
 /////////////////////////////////////////////////////////////////////////////////////////
-void encoderDriveWithLift(int power, int encoderCount, int position){
+void encoderDriveWithLift(int power, int encoderCount, int position, int slowDown){
 
-	while(abs(nMotorEncoder[leftDrive2]) < encoderCount && abs(nMotorEncoder[rightDrive2]) < encoderCount - 100){
+	while(abs(nMotorEncoder[leftDrive2]) < encoderCount && abs(nMotorEncoder[rightDrive2]) < encoderCount - 300){
 		drive(power);	//Drive robot at power
 
 		if(nMotorEncoder[leftDrive2] >= encoderCount)
@@ -99,13 +100,13 @@ void encoderDriveWithLift(int power, int encoderCount, int position){
 
 		if(SensorValue[armPot] < position)
 			motor[leftLift] = motor[rightLift] = 127;
-			else
-				motor[leftLift] = motor[rightLift] = 0;
+		else
+			motor[leftLift] = motor[rightLift] = 0;
 	}
 
 	//Slow down near destination
 	while(abs(nMotorEncoder[leftDrive2]) < encoderCount && abs(nMotorEncoder[rightDrive2]) < encoderCount){
-		drive(50);	//Drive robot at power
+		drive(slowDown);	//Drive robot at power
 
 		if(nMotorEncoder[leftDrive2] >= encoderCount)
 			motor[leftDrive1]=motor[leftDrive2] = motor[leftDrive3] = 0;
@@ -115,8 +116,8 @@ void encoderDriveWithLift(int power, int encoderCount, int position){
 
 		if(SensorValue[armPot] < position)
 			motor[leftLift] = motor[rightLift] = 127;
-			else
-				motor[leftLift] = motor[rightLift] = 0;
+		else
+			motor[leftLift] = motor[rightLift] = 0;
 	}
 	drive(0);	//Turn off after it has reached destination
 }
@@ -125,17 +126,18 @@ void encoderDriveWithLift(int power, int encoderCount, int position){
 //**Spin**/
 //
 //Spin robot using encoders
+//positive degrees10 = clockwise
 /////////////////////////////////////////////////////////////////////////////////////////
-void spin(int degrees10, int error){
-	while(abs(nMotorEncoder[leftDrive2]) < degrees10 - error){
-		basicDrive(40, -40);
-	}
-	while(abs(nMotorEncoder[leftDrive2]) > degrees10 + error || abs(nMotorEncoder[leftDrive2]) < degrees10 - error){
-		if(abs(SensorValue[in6]) > degrees10){
-			basicDrive(-20, 20);
+void spin(int power, int encoderCount){
+	//Clockwise with positive power
+	if(power > 0){
+		while(abs(nMotorEncoder[leftDrive2]) < encoderCount){
+			basicDrive(power, -power);
 		}
-		else{
-			basicDrive(20, -20);
+	}
+	else{
+		while(abs(nMotorEncoder[leftDrive2]) < encoderCount){
+			basicDrive(power, -power);
 		}
 	}
 	drive(0);
@@ -162,6 +164,7 @@ void lowerLift(int position)
 		motor[leftLift] = motor[rightLift] = -127;
 	}
 	motor[leftLift] = motor[rightLift] = 0;
+	return;
 }
 
 void timeLift(int power, int time)

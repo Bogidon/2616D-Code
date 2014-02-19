@@ -18,9 +18,10 @@
 
 #include "Vex_Competition_Includes.c"   //Main competition background code...do not modify!
 #include "ControllerFunctions.c"		//Custom library of functions for controller
-#include "AutonomousFunctions.c"	//Custom library of functions for autonomous
+#include "Autonomous/AutonomousFunctions.c"	//Custom library of functions for autonomous
+#include "Autonomous/AutonomousPrograms.c"	//Custom library of functions for autonomous
 
-//up = 1295
+//up = 1405
 //down = 134
 //1 = red
 //180 turn = 825
@@ -57,138 +58,28 @@ void pre_auton()
 
 task autonomous()
 {
-	spin(825, 200);
-	////No pin = middle zone
-	//if(!SensorValue[autonomousSelector]){
 
-	//	resetEncoders();
+	resetEncoders();
 
-	//	//FlipOut
-	//	motor[leftIntake] = motor[rightIntake] = -127;
-	//	wait1Msec(800);
-	//	motor[leftIntake] = motor[rightIntake] = 0;
+	//No position pin = middle zone
+	if(!SensorValue[autonomousSelector]){
+		//No color pin = blue
+		if(!SensorValue[colorSelector])
+			blueMiddle();
+		//Color pin = red
+		else
+			redMiddle();
+	}
 
-	//	//Spin to big ball
-	//	spin(-90, 10);
-	//	wait1Msec(500);
-
-	//	////Lift lift
-	//	liftLift(829);
-	//	wait1Msec(500);
-
-	//	//Drive into big ball
-	//	encoderDrive(85, 550);
-	//	wait1Msec(500);
-
-	//	//Return to tile
-	//	encoderDrive(127, 0);
-	//	wait1Msec(500);
-	//	resetEncoders();
-
-	//	////Lower lift
-	//	lowerLift(140);
-	//	wait1Msec(500);
-
-	//	//Go forward when button is pushed
-	//	while(true)
-	//	{
-	//		if(SensorValue[button])
-	//		{
-	//			encoderDrive(127, 1100);
-	//			wait1Msec(500);
-	//			resetEncoders();
-	//			break;
-	//		}
-	//	}
-
-	//	//Lift lift
-	//	//liftLift(2495);
-	//	//wait1Msec(500);
-	//	//motor[leftLift]=motor[rightLift]=15;
-
-	//	//Spin to tube
-	//	//spin(-46);
-	//	//wait1Msec(500);
-	//	//resetEncoders();
-
-	//	//Drive forward
-	//	encoderDrive(127, 200);
-
-	//	//Drive to tube
-	//	//motor[leftLift] = motor[rightLift] = 127;
-	//	//wait1Msec(1200);
-	//	//encoderDriveWithLift(35, 580, 1440);
-	//	//wait1Msec(500);
-	//	//resetEncoders();
-
-	//	////Lift lift
-	//	//liftLift(1440);
-	//	//wait1Msec(500);
-
-	//	//Outtake
-	//	motor[leftIntake] = motor[rightIntake] = 127;
-
-	//	//Drive back
-	//	encoderDrive(100, -110);
-	//	wait1Msec(500);
-	//	resetEncoders();
-
-	//	//Outtake big ball
-	//	//motor[leftIntake] = motor[rightIntake] = 127;
-	//	//wait1Msec(1200);
-	//	//motor[leftIntake] = motor[rightIntake] = 0;
-
-	//	//Drive back a bit for large ball
-	//	//encoderDrive(100, -200);
-	//	//wait1Msec(500);
-	//	//resetEncoders();
-	//}
-	////Pin = hanging zone
-	//else{
-
-	//	//FlipOut
-	//	motor[leftIntake] = motor[rightIntake] = -127;
-	//	wait1Msec(800);
-
-	//	//Pick up buckys
-	//	encoderDrive(70, 760);
-	//	wait1Msec(500);
-	//	resetEncoders();
-
-	//	//Go back
-	//	encoderDrive(70, -300);
-	//	wait1Msec(4200);		//Wait for hari's slow ass
-	//	resetEncoders();
-
-	//	//Go forward on button click
-	//	if(SensorValue[autonomousSelector])
-	//	{
-	//		encoderDrive(127, 900);
-	//		wait1Msec(500);
-	//		resetEncoders();
-	//	}
-
-	//	//Spin
-	//	spin(-320, 10);
-
-	//	//Knock out balls
-	//	encoderDrive(127, 200);
-	//	wait1Msec(500);
-	//	resetEncoders();
-
-	//	//Lift lift
-	//	liftLift(1000);
-
-	//	//Spit out buckys into goal zone
-	//	motor[leftIntake] = motor[rightIntake] = 127;
-	//	wait1Msec(4000);
-	//	motor[leftIntake] = motor[rightIntake] = 0;
-
-	//	//Port 11 pin = red
-	//	if(SensorValue[colorSelector]){
-	//	}
-
-	//}
+	//Pin = hanging zone
+	else{
+		//No color pin = blue
+		if(!SensorValue[colorSelector])
+			blueHanging();
+		//Color pin = red
+		else
+			redHanging();
+	}
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
