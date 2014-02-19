@@ -50,80 +50,75 @@ void drive(int power){
 //**Encoder-based Drive**/
 //
 //Info:
-// o + or - encoderCount determines front or back
-// o power must be positive
+// • + or - power determines front or back
+// • encoder count must be positive
 /////////////////////////////////////////////////////////////////////////////////////////
 void encoderDrive(int power, int encoderCount){
 
-	//For positive distance
-	if(encoderCount > 0){
-		while(nMotorEncoder[leftDrive2] < encoderCount && nMotorEncoder[rightDrive2] < encoderCount){
-			drive(power);	//Drive robot at power
+	while(abs(nMotorEncoder[leftDrive2]) < encoderCount && abs(nMotorEncoder[rightDrive2]) < encoderCount - 100){
+		drive(power);	//Drive robot at power
 
-			if(nMotorEncoder[leftDrive2] >= encoderCount)
-				motor[leftDrive1]=motor[leftDrive2]=motor[leftDrive3] = 0;
+		if(nMotorEncoder[leftDrive2] >= encoderCount)
+			motor[leftDrive1]=motor[leftDrive2]=motor[leftDrive3] = 0;
 
-			if(nMotorEncoder[rightDrive2] >= encoderCount)
-				motor[rightDrive1] = motor[rightDrive2] = 0;
+		if(nMotorEncoder[rightDrive2] >= encoderCount)
+			motor[rightDrive1] = motor[rightDrive2] = 0;
 		}
-		drive(0);	//Turn off after it has reached destination
-	}
 
-	//For negative distance
-	else
-	{
-		while(nMotorEncoder[leftDrive2] > encoderCount && nMotorEncoder[rightDrive2] > encoderCount){
-			drive(-power);	//Drive robot in reverse with power
+	//Slow down near destination
+	while(abs(nMotorEncoder[leftDrive2]) < encoderCount && abs(nMotorEncoder[rightDrive2]) < encoderCount){
+		drive(50);	//Drive robot at power
 
-			if(nMotorEncoder[leftDrive2] <= encoderCount)
-				motor[leftDrive1]=motor[leftDrive2]=motor[leftDrive3] = 0;
+		if(nMotorEncoder[leftDrive2] >= encoderCount)
+			motor[leftDrive1]=motor[leftDrive2]=motor[leftDrive3] = 0;
 
-			if(nMotorEncoder[rightDrive2] <= encoderCount)
-				motor[rightDrive1] = motor[rightDrive2] = 0;
+		if(nMotorEncoder[rightDrive2] >= encoderCount)
+			motor[rightDrive1] = motor[rightDrive2] = 0;
 		}
-		drive(0);	//Turn off after it has reached destination
-	}
+	drive(0);	//Turn off after it has reached destination
 }
 
+/////////////////////////////////////////////////////////////////////////////////////////
+//**Encoder-based Drive w/ Lift**/
+//
+//Info:
+// • + or - power determines front or back
+// • + or - position determines lift up or down
+// • encoder count must be positive
+/////////////////////////////////////////////////////////////////////////////////////////
 void encoderDriveWithLift(int power, int encoderCount, int position){
-		//For positive distance
-	if(encoderCount > 0){
-		while(nMotorEncoder[leftDrive2] < encoderCount && nMotorEncoder[rightDrive2] < encoderCount){
-			drive(power);	//Drive robot at power
 
-			if(nMotorEncoder[leftDrive2] >= encoderCount)
-				motor[leftDrive1]=motor[leftDrive2]=motor[leftDrive3] = 0;
+	while(abs(nMotorEncoder[leftDrive2]) < encoderCount && abs(nMotorEncoder[rightDrive2]) < encoderCount - 100){
+		drive(power);	//Drive robot at power
 
-			if(nMotorEncoder[rightDrive2] >= encoderCount)
-				motor[rightDrive1] = motor[rightDrive2] = 0;
+		if(nMotorEncoder[leftDrive2] >= encoderCount)
+			motor[leftDrive1]=motor[leftDrive2] = motor[leftDrive3] = 0;
 
-			if(SensorValue[armPot] < position)
-				motor[leftLift] = motor[rightLift] = 127;
-				else
-					motor[leftLift] = motor[rightLift] = 0;
-		}
-		drive(0);	//Turn off after it has reached destination
+		if(nMotorEncoder[rightDrive2] >= encoderCount)
+			motor[rightDrive1] = motor[rightDrive2] = 0;
+
+		if(SensorValue[armPot] < position)
+			motor[leftLift] = motor[rightLift] = 127;
+			else
+				motor[leftLift] = motor[rightLift] = 0;
 	}
 
-	//For negative distance
-	else
-	{
-		while(nMotorEncoder[leftDrive2] > encoderCount && nMotorEncoder[rightDrive2] > encoderCount){
-			drive(-power);	//Drive robot in reverse with power
+	//Slow down near destination
+	while(abs(nMotorEncoder[leftDrive2]) < encoderCount && abs(nMotorEncoder[rightDrive2]) < encoderCount){
+		drive(50);	//Drive robot at power
 
-			if(nMotorEncoder[leftDrive2] <= encoderCount)
-				motor[leftDrive1]=motor[leftDrive2]=motor[leftDrive3] = 0;
+		if(nMotorEncoder[leftDrive2] >= encoderCount)
+			motor[leftDrive1]=motor[leftDrive2] = motor[leftDrive3] = 0;
 
-			if(nMotorEncoder[rightDrive2] <= encoderCount)
-				motor[rightDrive1] = motor[rightDrive2] = 0;
+		if(nMotorEncoder[rightDrive2] >= encoderCount)
+			motor[rightDrive1] = motor[rightDrive2] = 0;
 
-			if(SensorValue[armPot] < position)
-				motor[leftLift] = motor[rightLift] = 127;
-				else
-					motor[leftLift] = motor[rightLift] = 0;
-		}
-		drive(0);	//Turn off after it has reached destination
+		if(SensorValue[armPot] < position)
+			motor[leftLift] = motor[rightLift] = 127;
+			else
+				motor[leftLift] = motor[rightLift] = 0;
 	}
+	drive(0);	//Turn off after it has reached destination
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
