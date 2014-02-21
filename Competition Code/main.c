@@ -105,8 +105,6 @@ task usercontrol()
 			}else {
 			motor[leftIntake] = motor[rightIntake] = 0;
 		}
-
-
         //Driving
         //Automatically shut off drive when the joystick has a value of -30 to +30 to avoid stalling and save battery.
 
