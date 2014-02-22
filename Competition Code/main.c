@@ -1,5 +1,5 @@
 #pragma config(I2C_Usage, I2C1, i2cSensors)
-#pragma config(Sensor, in1,    armPot,         sensorNone)
+#pragma config(Sensor, in1,    armPot,         sensorPotentiometer)
 #pragma config(Sensor, dgtl5,  button,         sensorTouch)
 #pragma config(Sensor, dgtl11, colorSelector,  sensorTouch)
 #pragma config(Sensor, dgtl12, autonomousSelector, sensorTouch)

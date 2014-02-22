@@ -20,7 +20,7 @@ void blueMiddle () {
 	motor[leftIntake] = motor[rightIntake] = 0;
 
 	//Spin to big ball
-	spin(-40, 127);
+	spin(-40, 120);
 	wait1Msec(300);
 	resetEncoders();
 
@@ -35,7 +35,7 @@ void blueMiddle () {
 	resetEncoders();
 
 	////Lower lift
-	lowerLift(400);
+	lowerLift(200);
 
 	//Go forward when button is pushed
 	while(true)
@@ -74,8 +74,8 @@ void blueMiddle () {
 	resetEncoders();
 
 	//Outtake big ball
-	motor[leftIntake] = motor[rightIntake] = -127;
-	wait1Msec(1200);
+	motor[leftIntake] = motor[rightIntake] = -70;
+	wait1Msec(1600);
 	motor[leftIntake] = motor[rightIntake] = 0;
 
 	//Drive back a bit
@@ -117,7 +117,7 @@ void redMiddle () {
 	resetEncoders();
 
 	////Lower lift
-	lowerLift(400);
+	lowerLift(200);
 
 	//Go forward when button is pushed
 	while(true)
@@ -222,7 +222,7 @@ void blueHanging () {
 			resetEncoders();
 
 			//Outtake
-			motor[leftIntake] = motor[rightIntake] = -70;
+			motor[leftIntake] = motor[rightIntake] = -127;
 			wait1Msec(2200);
 			motor[leftIntake] = motor[rightIntake] = 0;
 
@@ -306,7 +306,7 @@ void redHanging () {
 			resetEncoders();
 
 			//Outtake
-			motor[leftIntake] = motor[rightIntake] = -70;
+			motor[leftIntake] = motor[rightIntake] = -127;
 			wait1Msec(2200);
 			motor[leftIntake] = motor[rightIntake] = 0;
 
