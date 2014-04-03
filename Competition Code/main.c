@@ -1,6 +1,7 @@
 #pragma config(I2C_Usage, I2C1, i2cSensors)
 #pragma config(Sensor, in1,    armPot,         sensorPotentiometer)
 #pragma config(Sensor, dgtl5,  button,         sensorTouch)
+#pragma config(Sensor, dgtl8,  pneumatics,     sensorDigitalOut)
 #pragma config(Sensor, dgtl11, colorSelector,  sensorTouch)
 #pragma config(Sensor, dgtl12, autonomousSelector, sensorTouch)
 #pragma config(Sensor, I2C_1,  ,               sensorQuadEncoderOnI2CPort,    , AutoAssign)
@@ -50,11 +51,6 @@ void pre_auton()
 // You must modify the code to add your own robot specific commands here.
 //
 /////////////////////////////////////////////////////////////////////////////////////////
-
-
-//Info for Hari:
-//
-//to drive forward:  encoderCount(the power you want max is 127, the number of degrees);
 
 task autonomous()
 {
@@ -143,5 +139,11 @@ task usercontrol()
 			}else{
 			motor[port7] = motor[port8] = 0;
 		}
+
+		//Pneumatics
+		if (vexRT(Btn7U))
+			SensorValue[pneumatics] = 1;
+		else if (vexRT(Btn7D))
+			SensorValue[pneumatics] = 0;
 	}
 }
